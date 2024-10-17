@@ -1,5 +1,6 @@
 from faker import Faker
 import random
+
 fake = Faker()
 class BaseContact:
     def __init__(self, first_name, last_name, phone, email):
@@ -12,7 +13,9 @@ class BaseContact:
     @property
     def label_length(self):
         return len(self.first_name) + len(self.last_name)
+
 class BusinessContact(BaseContact):
+    """Klasa reprezentująca wizytówkę firmową."""
     def __init__(self, first_name, last_name, phone, email, job_title, company, work_phone):
         super().__init__(first_name, last_name, phone, email)
         self.job_title = job_title
@@ -20,6 +23,7 @@ class BusinessContact(BaseContact):
         self.work_phone = work_phone
     def contact(self):
         print(f"Wybieram numer +48 {self.work_phone} i dzwonię do {self.first_name} {self.last_name}.")
+
 def create_contacts(contact_type, quantity):
     contacts = []
     for _ in range(quantity):
@@ -44,12 +48,13 @@ def create_contacts(contact_type, quantity):
             raise ValueError("Nieprawidłowy typ wizytówki.")
         contacts.append(contact)
     return contacts
-# Przykładowe użycie
-contacts = create_contacts("BaseContact", 3)
-for contact in contacts:
-    contact.contact()
-    print(f"Długość etykiety: {contact.label_length}")
-contacts = create_contacts("BusinessContact", 2)
-for contact in contacts:
-    contact.contact()
-    print(f"Długość etykiety: {contact.label_length}")
+
+if __name__ == "__main__":
+    contacts = create_contacts("BaseContact", 3)
+    for contact in contacts:
+        contact.contact()
+        print(f"Długość etykiety: {contact.label_length}")
+    contacts = create_contacts("BusinessContact", 2)
+    for contact in contacts:
+        contact.contact()
+        print(f"Długość etykiety: {contact.label_length}")
